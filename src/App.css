@@ -1,6 +1,21 @@
+
+::-webkit-scrollbar {
+  display: none;
+}
+
 .App {
   text-align: center;
+  background-color: brown;
 }
+
+.form-style{
+  text-align: center;
+  border:10px solid black;
+  background-color: azure;
+  margin:10px;
+  padding:50px;
+  align-content: center;
+ }
 
 .App-logo {
   height: 40vmin;
@@ -12,16 +27,61 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+ .mcomp{
+  position:relative;
+  background-color: black;
+  height: auto;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  max-width: 300px;
+  padding:3px;
+  margin:15px;
+} 
+.imgcontainer {
+  position: relative;
+  max-width: 310px; 
+  transition: width 3s, height 3s;
+}
 
+.image{
+  display:block;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease;
+}
+  
+.flab{
+  color: violet;
+}
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-wrap:wrap;
   font-size: calc(10px + 2vmin);
   color: white;
+  height: 100%;
+  margin:0px;
+  padding:0px;
+}
+
+.body{
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(121,9,13,1) 35%, rgba(0,212,255,1) 100%);
+  float:left;
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+  height: 100%;
+  margin:0;
+  overflow: hidden;
+}
+
+.Sidebar{
+  
+  width:210px;
+  background-color: black;
+  color:white;
+  font-size: 24px;
+  padding: 5px;
+
 }
 
 .App-link {
@@ -36,3 +96,69 @@
     transform: rotate(360deg);
   }
 }
+
+.overlay {
+   position: absolute;
+  bottom:0;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5); 
+  color: #e88383;
+  transition: .5s ease;
+  opacity:0;
+  color: white;
+  font-size: 20px;
+  padding:20px;
+  text-align: center;
+  width: 86.75%; 
+}
+
+/* When you mouse over the container, fade in the overlay title */
+ .imgcontainer:hover .overlay {
+  opacity: 1;
+} 
+
+ .imgcontainer:hover{
+  opacity: 1;
+  position: relative;
+  z-index: 1;
+  width:310px;
+  height: 460px;
+}
+
+
+.rotate {
+    transform: rotate(180deg); /* You can adjust the rotation angle as needed */
+}
+
+/* @import url('../node_modules/font-awesome/css/font-awesome.min.css'); */
+
+.review{
+  flex-direction:row;
+  flex-wrap: wrap;
+  float:left;
+  background-color: black;
+  height: auto;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  width: 460px;
+  padding:7.5px;
+  margin:7.5px;
+  
+  }
+  .rbox{
+  font-style: italic;
+   background-color: beige;
+   color:black;
+   box-sizing: border-box;
+   word-wrap:break-word;
+   max-width: 750px;
+   padding:8.5px;
+   margin:15px;
+  }
+  .bottom-right {
+    position:absolute;
+    bottom: 0;
+    left: 0;
+}
+
+
