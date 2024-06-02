@@ -2,24 +2,23 @@ const express=require("express");
 const mysql=require('mysql');
 const cors=require('cors');
 const app=express();
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
 var router=express.Router();
 
 // app.use(session({secret: "Your secret key"}));
 // var session = require('express-session');
 var cookieParser = require('cookie-parser');
+const { METHODS } = require("http");
 app.use(cookieParser());
 
-var User ={uname:"",uid:""};
+var User ={uname:"",uid:"",admin:"0"};
 
 const corsOptions = {
     //To allow requests from client
-    origin: [
-      "http://localhost:3000",
-    ],
+    origin:true,
     credentials: true,
-    exposedHeaders: ["set-cookie"],
+    exposedHeaders: ["set-cookie"]
   };
   
   app.use("/", cors(corsOptions), router);
@@ -59,6 +58,7 @@ app.post('/Login',(req,res)=>{
 
     User.uname=result[0]["Account_username"];
     User.uid=result[0]["Account_id"];
+    User.admin=result[0]["admin"]
     res.cookie("uname",result[0]["Account_username"]);
     res.cookie("uid",result[0]["Account_id"])
    }
@@ -71,10 +71,11 @@ app.post('/Login',(req,res)=>{
 app.post('/Filter',(req,res)=>{
 console.log(req.body[0]);
 db.query(req.body[0],function(err,result,fields){
-    if (err) throw err;
+    if(err){
+        res.status(400).send(err)}
+    else{
     console.log(result);
-    
-    res.status(200).send(result);
+    res.status(200).send(result);}
 })
 })
 
@@ -201,14 +202,15 @@ db.query(sql,[values],(err,data)=>{
 
 })
 
-app.get('/Report1',(req,res)=>{
-    sql="SELECT * FROM genre_report";
+app.get('/Report1',(req,res)=>{ 
+    sql=`SELECT movie_info.Genre,count(*) as genre_count,avg(movie_info.Vote_Avg) as avg_vote,SEC_TO_TIME(AVG(TIME_TO_SEC(movie.Runtime))) as AVG_runtime FROM lists,movie,movie_info where lists.mid=movie.Id and movie.Id=movie_info.movie_id and lists.uid=${User.uid} and lists.watch=1 group by movie_info.Genre`;
     db.query(sql,function(err,result,fields){
         if (err) throw err;
         
         console.log(result);
         res.status(200).send(result);
     })
+
 }
 )
 app.get('/Report2',(req,res)=>{

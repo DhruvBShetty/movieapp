@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar,faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import { faStar,faClock,faFlagCheckered} from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios'
 import swal from 'sweetalert';
 
@@ -17,7 +17,7 @@ function Moviecomp(props){
     if(token.uname!='' && token.uid!=''){
     return <div class='mcomp'>
     <div class="imgcontainer">
-    <a href={'http://localhost:3000/reviews/'+props.id}>
+    <a href={'/reviews/'+props.id}>
     <img src={props.piclink} class="image" alt={"image of "+props.name} ></img>
     </a>
     {/* <div class="overlay">{props.name}</div> */}
@@ -27,7 +27,7 @@ function Moviecomp(props){
      <br/>
      <div class="bottom-right">
     
-     <FontAwesomeIcon icon={faSquarePlus} title='Add to watchlist' 
+     <FontAwesomeIcon icon={faClock} title='Add to watchlist' style={{color:"red",}}
      onClick={()=>{ const sql=`UPDATE lists SET watch=1,done=0 WHERE mid=${props.id} and uid=${token.uid};`
         axios.post('http://localhost:8081/generalup',[sql]).then(
             swal("Great!", props.name + " was added to watchlist", "success")).catch(err=>
@@ -37,7 +37,7 @@ function Moviecomp(props){
             );}}
      />
      <span>&nbsp;</span>
-     <FontAwesomeIcon icon={faSquarePlus} style={{color:"#63E6BE",}} title='Add to completed list'
+     <FontAwesomeIcon icon={faFlagCheckered} style={{color:"green",}} title='Add to completed list'
      onClick={()=>{ const sql=`UPDATE lists SET watch=0,done=1 WHERE mid=${props.id} and uid=${token.uid};`
      axios.post('http://localhost:8081/generalup',[sql]).then(
          swal("Great!", props.name + " was added to finish list", "success")).catch(err=>
@@ -50,7 +50,7 @@ function Moviecomp(props){
     }else{
         return <div class='mcomp'>
         <div class="imgcontainer">
-        <a href={'http://localhost:3000/reviews/'+props.id}>
+        <a href={'/reviews/'+props.id}>
         <img src={props.piclink} class="image" alt={"image of "+props.name} ></img>
         </a>
         {/* <div class="overlay">{props.name}</div> */}
@@ -103,7 +103,7 @@ function Sidebar(){
         return <p onClick={()=>window.location.pathname=val.link}>{val.title}</p>;
     })}
     <p onClick ={()=>{axios.get("http://localhost:8081/logout");
-                    window.location = "http://localhost:3000/Login";}}>logout</p>
+                    window.location = "/Login";}}>logout</p>
     </div>
 }
 

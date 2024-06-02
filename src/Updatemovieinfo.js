@@ -4,6 +4,10 @@ import axios from 'axios'
 import './App.css'
 import { Sidebar } from './component';
 
+import swal from 'sweetalert';
+
+let token = await axios.get("http://localhost:8081/getsession").then(res=>res.data);
+
 
  function Updatemovieinfo() {
     const navigate=useNavigate();
@@ -53,7 +57,7 @@ import { Sidebar } from './component';
     })
 }
 
-
+    if(token.admin===1){
     return (
         <body class="body">
             <Sidebar/>
@@ -99,6 +103,14 @@ import { Sidebar } from './component';
         </div>
         </body>
     )
+}
+else{
+    swal({
+        title: "Admin Access!",
+        text: "Sorry, you don't have access to this feature",
+        icon: "info"
+      }).then(res=>{navigate('/')})
+}
 
 }
 

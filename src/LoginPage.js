@@ -26,7 +26,7 @@ const handleSubmit=(event)=>{
         // Update the 'obj' property by creating a new array
         console.log(res.data);
         if(res.data.length!=0){
-            window.location="http://localhost:3000/"
+            window.location="/"
         }
         else{
             swal("Oops!", "Username or Password not Found!", "error");

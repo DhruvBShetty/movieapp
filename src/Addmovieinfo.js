@@ -3,7 +3,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import {Sidebar} from './component';
 import axios from 'axios'
 import './App.css'
+import swal from 'sweetalert';
 
+let token = await axios.get("http://localhost:8081/getsession").then(res=>res.data);
 
  function Addmovieinfo() {
     const navigate=useNavigate();
@@ -36,7 +38,7 @@ import './App.css'
     })
 }
 
-
+if (token.admin === 1){
     return (
         <body class="body">
             <Sidebar/>
@@ -82,7 +84,14 @@ import './App.css'
         </div>
         </body>
     )
-
+}
+  else{
+    swal({
+        title: "Admin Access!",
+        text: "Sorry, you don't have access to this feature",
+        icon: "info"
+      }).then(res=>{navigate('/')})
+  }
 }
 
 export default Addmovieinfo;

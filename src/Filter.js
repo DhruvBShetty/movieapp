@@ -1,6 +1,6 @@
 import './App.css';
 import {Moviecomp,Sidebar,Filtercomp,Reviewcomp} from './component';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import React,{useState} from 'react'
 import swal from 'sweetalert';
 
@@ -18,16 +18,25 @@ export default function Filter() {
         vote_avg:1,
         });
     
-    const [obj,setObj]=useState("start");
+    var [obj,setObj]=useState(["start"]);
 
-    function checkob(){
-      if (obj.length==0){
+    React.useEffect(() => {
+      if (obj.length==0) {
         swal({
           title: "Not Found!",
           text: "Sorry, the movie is not available",
         })
-      }
-    }
+      } 
+    },[obj])
+
+    // function checkob(){
+    //   if (obj.length==0){
+    //     swal({
+    //       title: "Not Found!",
+    //       text: "Sorry, the movie is not available",
+    //     })
+    //   }
+    // }
       
     const handleSubmit=(event)=>{
     event.preventDefault();       
@@ -38,17 +47,18 @@ export default function Filter() {
        WHERE title="${values.movie}"`;
     }
     else if(values.genre1=='' && values.genre2==''){
-      sql=`SELECT * FROM movie_info WHERE Vote_Avg>${values.vote_avg!=''?values.vote_avg:1} ORDER BY Vote_Avg DESC`;
+      sql=`SELECT * FROM movie_info,movie WHERE Vote_Avg>${values.vote_avg!=''?values.vote_avg:1} and movie.Id=movie_info.movie_id ORDER BY Vote_Avg DESC`;
     }
     else{
-        sql=`SELECT * FROM movie_info WHERE (Genre='${values.genre1}' OR Genre='${values.genre2}') AND Vote_Avg>${values.vote_avg!=''?values.vote_avg:1} ORDER BY Vote_Avg DESC`;
+        sql=`SELECT * FROM movie_info,movie WHERE (Genre='${values.genre1}' OR Genre='${values.genre2}') AND Vote_Avg>${values.vote_avg!=''?values.vote_avg:1} 
+        and movie.Id=movie_info.movie_id ORDER BY Vote_Avg DESC`;
     }
     console.log(sql);
     axios.post('http://localhost:8081/Filter',[sql]).then((res) => {
         // Update the 'obj' property by creating a new array
         console.log(res.data);
         setObj(res.data);
-      }).then(checkob);
+      })
 
 }
 
