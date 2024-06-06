@@ -16,7 +16,7 @@ var User ={uname:"",uid:"",admin:"0"};
 
 const corsOptions = {
     //To allow requests from client
-    origin:true,
+    origin:["http://localhost:3000","http://172.25.80.1:3000"],
     credentials: true,
     exposedHeaders: ["set-cookie"]
   };
