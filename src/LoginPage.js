@@ -7,7 +7,7 @@ import swal from 'sweetalert';
 import  { Redirect } from 'react-router-dom'
 // import {UserProfile,PrivateRoutes} from './utils/PrivateRoutes';
 import { BrowserRouter,Route} from 'react-router-dom';
-
+import { server_addr } from './utils/PrivateRoutes'
 
 function LoginPage() {
     const [values,setValues]=useState({
@@ -22,7 +22,7 @@ const handleInput=(event)=>{
 const handleSubmit=(event)=>{
       event.preventDefault();
       var sql = `SELECT * FROM users WHERE Account_username="${values.name}" AND Password="${values.password}"`;
-      axios.post('http://localhost:8081/Login',[sql]).then((res) => {
+      axios.post(`http://${server_addr}/Login`,[sql]).then((res) => {
         // Update the 'obj' property by creating a new array
         console.log(res.data);
         if(res.data.length!=0){
@@ -38,8 +38,9 @@ const handleSubmit=(event)=>{
 
     return (
         <body class="body">
-            <Sidebar/>
             
+            <Sidebar/>
+            <div class="formbody">
             <form action="" onSubmit={handleSubmit} class="form-style" >
             <h2>Sign in to Movies</h2>
                 <p>
@@ -56,10 +57,10 @@ const handleSubmit=(event)=>{
                 </p>
 
                 <footer>
-                <p><Link to="/Register">Create new account</Link>.</p>
+                {/* <p><Link to="/Register">Create new account</Link>.</p> */}
             </footer>
             </form>
- 
+            </div>
             
         </body>
     );

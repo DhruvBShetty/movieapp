@@ -3,10 +3,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import './App.css'
 import { Sidebar } from './component';
-
+import { server_addr } from './utils/PrivateRoutes';
 import swal from 'sweetalert';
 
-let token = await axios.get("http://localhost:8081/getsession").then(res=>res.data);
+let token = await axios.get(`http://${server_addr}/getsession`).then(res=>res.data);
 
 
  function Updatemovieinfo() {
@@ -46,7 +46,7 @@ let token = await axios.get("http://localhost:8081/getsession").then(res=>res.da
     
     var sql=`UPDATE movie_info SET ${arr.join(",")} WHERE movie_id='${values.id}';`;
     console.log(sql);
-    axios.post('http://localhost:8081/generalup',[sql])
+    axios.post(`http://${server_addr}/generalup`,[sql])
     .then(res=>{
         
         navigate('/');
@@ -61,6 +61,7 @@ let token = await axios.get("http://localhost:8081/getsession").then(res=>res.da
     return (
         <body class="body">
             <Sidebar/>
+        <div class="formbody">
         <div className="form-style">
             <h2>Update Movie info</h2>
             <form action="" onSubmit={handleSubmit} id="usrform">
@@ -80,7 +81,7 @@ let token = await axios.get("http://localhost:8081/getsession").then(res=>res.da
                 </p>
                 <p>
                     <label>Overview</label><br/>
-                    <textarea name="overview" form="usrform" onChange={handleInput} maxLength="400" rows="10" cols="30" ></textarea>
+                    <textarea name="overview" form="usrform" onChange={handleInput} maxLength="400" rows="5" cols="30" ></textarea>
                 </p>
                 <p>
                     <label>Vote_Avg</label><br/>
@@ -100,6 +101,7 @@ let token = await axios.get("http://localhost:8081/getsession").then(res=>res.da
             <footer>
                 <p><Link to="/">Back to Homepage</Link>.</p>
             </footer>
+        </div>
         </div>
         </body>
     )

@@ -3,10 +3,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import './App.css'
 import { Sidebar } from './component';
+import { server_addr } from './utils/PrivateRoutes';
 
 import swal from 'sweetalert';
 
-let token = await axios.get("http://localhost:8081/getsession").then(res=>res.data);
+let token = await axios.get(`http://${server_addr}/getsession`).then(res=>res.data);
 
 
  function Updatemovie() {
@@ -44,7 +45,7 @@ let token = await axios.get("http://localhost:8081/getsession").then(res=>res.da
     
     var sql=`UPDATE movie SET ${arr.join(",")} WHERE Id='${values.id}';`;
     console.log(sql);
-    axios.post('http://localhost:8081/generalup',[sql])
+    axios.post(`http://${server_addr}/generalup`,[sql])
     .then(res=>{
         navigate('/');
     })
@@ -59,6 +60,7 @@ if (token.admin === 1){
     return (
         <body class="body">
             <Sidebar/>
+        <div class="formbody">
         <div className="form-style">
             <h2>Update movie</h2>
             <form action="" onSubmit={handleSubmit}>
@@ -98,7 +100,7 @@ if (token.admin === 1){
             <footer>
                 <p><Link to="/">Back to Homepage</Link>.</p>
             </footer>
-
+            </div>
     </div>
     </body>
     )

@@ -3,19 +3,34 @@
   display: none;
 }
 
+.customh {
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+  /* border: 2px solid black; */
+}
+
 .App {
   text-align: center;
   background-color: brown;
 }
 
 .form-style{
-  text-align: center;
   border:10px solid black;
   background-color: azure;
-  margin:10px;
+  margin:50px;
   padding:50px;
-  align-content: center;
+  text-align: center;
  }
+
+.formfilter{
+  border:4px solid black;
+  background-color: azure;
+  margin:10px;
+  padding:60px;
+  text-align: center;
+  max-height: 450px;
+}
 
 .App-logo {
   height: 40vmin;
@@ -49,9 +64,15 @@
   height: 100%;
   transition: transform 0.5s ease;
 }
+.recimage{
+  display:block;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease;
+}
   
 .flab{
-  color: violet;
+  color: black;
 }
 .App-header {
   display: flex;
@@ -61,7 +82,6 @@
   height: 100%;
   margin:0px;
   padding:0px;
-  
 }
 
 .body{
@@ -73,6 +93,23 @@
   height: 100%;
   margin:0;
   overflow: hidden;
+}
+
+.rbody{
+  float:left;
+  display: flex;
+  margin:0;
+  overflow: hidden;
+}
+
+.formbody{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+  height: 100vh;
+  margin: 20px;
+  padding:20px;
 }
 
 .Sidebar{
@@ -147,7 +184,6 @@
   
   }
   .rbox{
-  font-style: italic;
    background-color: beige;
    color:black;
    box-sizing: border-box;
@@ -155,6 +191,8 @@
    max-width: 750px;
    padding:8.5px;
    margin:15px;
+   border-radius: 6px;
+   text-align: center;
   }
   .bottom-right {
     position:absolute;
@@ -164,7 +202,8 @@
 table, th, td {
   border: 1px solid red;
   border-style: outset;
-  border-radius: 10px;
+  border-radius: 6px;
   padding: 12px;
   text-align: center;
 }
+

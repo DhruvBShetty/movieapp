@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Sidebar } from './component'
 import axios from 'axios'
 import './App.css'
-
+import { server_addr } from './utils/PrivateRoutes'
 
  function Register() {
     const navigate=useNavigate();
@@ -26,7 +26,7 @@ import './App.css'
     event.preventDefault();
     console.log(values);
     
-    axios.post('http://localhost:8081/Register',values)
+    axios.post(`http://${server_addr}/Register`,values)
     .then(res=>{
         navigate('/Login')
     })

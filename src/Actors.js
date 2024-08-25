@@ -4,7 +4,7 @@
 
 // import React from 'react';
 
-// let obj=await axios.get('http://localhost:8081/Actors').then(res=>res.data);
+// let obj=await axios.get('http://${server_addr}/Actors').then(res=>res.data);
 
 
 // export default function Actors() {

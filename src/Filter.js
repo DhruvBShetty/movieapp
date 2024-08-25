@@ -3,7 +3,7 @@ import {Moviecomp,Sidebar,Filtercomp,Reviewcomp} from './component';
 import axios, { AxiosError } from 'axios';
 import React,{useState} from 'react'
 import swal from 'sweetalert';
-
+import { server_addr } from './utils/PrivateRoutes';
 
 
 export default function Filter() {
@@ -54,7 +54,7 @@ export default function Filter() {
         and movie.Id=movie_info.movie_id ORDER BY Vote_Avg DESC`;
     }
     console.log(sql);
-    axios.post('http://localhost:8081/Filter',[sql]).then((res) => {
+    axios.post(`http://${server_addr}/Filter`,[sql]).then((res) => {
         // Update the 'obj' property by creating a new array
         console.log(res.data);
         setObj(res.data);
@@ -74,9 +74,9 @@ const handleInput=(event)=>{
     <body class="body">
       <Sidebar/>
       
-      <form action="" onSubmit={handleSubmit}>
+      <form action="" onSubmit={handleSubmit} class="formfilter" >
                  <p>
-                    <label class="flab">Find movie</label>
+                    <label class="flab">Find movie</label><br/>
                     <input type="text" name="movie" onChange={handleInput}/>
                  </p>
                 <p>
@@ -102,7 +102,7 @@ const handleInput=(event)=>{
                     </select>
                 </p>
                 <p>
-                    <label class="flab">Rating {'>'}=</label><br/>
+                    <label class="flab">Rating {'>'}</label><br/>
                     <input type="number" name="vote_avg" onChange={handleInput} step="0.1" min="1" max="10"/>
                 </p>
                 

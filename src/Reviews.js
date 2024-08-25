@@ -1,21 +1,21 @@
 import axios from 'axios';
 import './App.css';
-import {Reviewcomp,Sidebar,Rcomp} from './component';
+import {Reviewcomp,Sidebar,Rcomp,Recommend,Recomm} from './component';
 import React,{useState} from 'react';
 import swal from 'sweetalert';
 import Select from 'react-select'
-import {Button,Col,Container} from 'react-bootstrap';  
-
-
+import { server_addr } from './utils/PrivateRoutes'; 
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 
 var mid=window.location.pathname.split('/')[2];
 var sql=`SELECT * FROM movie_info WHERE movie_id="${mid}"`;
 var sqlrev=`SELECT review FROM reviews WHERE movie_id="${mid}"`;
 
-let obj = await axios.post('http://localhost:8081/Filter',[sql]).then(res=>res.data).catch(err=>{alert("Movie of this ID not found")});
-let obj2 = await axios.post('http://localhost:8081/Filter',[sqlrev]).then(res=>res.data)
-let token = await axios.get("http://localhost:8081/getsession").then(res=>res.data);
+let obj = await axios.post(`http://${server_addr}/Filter`,[sql]).then(res=>res.data).catch(err=>{alert("Movie of this ID not found")});
+let obj2 = await axios.post(`http://${server_addr}/Filter`,[sqlrev]).then(res=>res.data)
+let token = await axios.get(`http://${server_addr}/getsession`).then(res=>res.data);
 
 const options = [
   { value: "'1'", label: 'Positive' },
@@ -24,7 +24,8 @@ const options = [
 ];
 
 export default function Reviews(){
-
+    const [rec,setrec]=useState([]);
+    const [modalShow, setModalShow] = useState(false);
     const [rev, setrev] = useState("");
     const [safe,setsafe]= useState("");
     const [selectedOption, setSelectedOption] = useState("");
@@ -57,7 +58,7 @@ export default function Reviews(){
         }
         else if (safe1 === "Safe content"){  
           let psql= `INSERT INTO reviews(movie_id,account_id,review,sentiment) VALUES (${mid},${token.uid},"${mrev}",${sent})`;
-          axios.post("http://localhost:8081/Filter",[psql]).then(res=>{window.location.reload()}).
+          axios.post(`http://${server_addr}/Filter`,[psql]).then(res=>{window.location.reload()}).
           catch(err=>{
             if(err.response.data.errno===1062){
             swal({
@@ -91,12 +92,21 @@ export default function Reviews(){
         defaultValue={selectedOption}
         onChange={(choice)=>{setSelectedOption(choice.value);
           const sent_sql=`SELECT review FROM reviews WHERE movie_id="${mid}" and sentiment IN (${choice.value});`;
-          axios.post('http://localhost:8081/Filter',[sent_sql]).then((res)=>{
+          axios.post(`http://${server_addr}/Filter`,[sent_sql]).then((res)=>{
             setsent(res.data)
           })
         }}
         options={options}
         className="mb-3"
+        styles={{option: (provided, state) => ({
+          ...provided,
+          color: state.isSelected ? '#fff' : '#333',
+          backgroundColor: state.isSelected
+            ? '#0052cc'
+            : state.isFocused
+            ? '#f0f0f0'
+            : '#fff',
+        })}}
         />
          
         {sent.map((i)=><Rcomp review={i["review"]}/>)}
@@ -106,10 +116,26 @@ export default function Reviews(){
        <div class="rbox">
         <h2>Submit Review</h2>
         <form id="revform" onSubmit={handlechange}>
-        <textarea rows="10" cols="50" id="mreview" minLength="20"></textarea>
+        <textarea rows="5" cols="30" id="mreview" minLength="50" required></textarea>
         <input type="submit" name="rsubmit" value="Submit"/>
         </form>
         </div>
+        <div class="rbox">
+        <Button variant="primary" onClick={() => {setModalShow(true);
+          const recsql=`SELECT * from recommend,movie_info where recommend.rid=movie_info.movie_id and mid=${mid};`
+          axios.post(`http://${server_addr}/Filter`,[recsql]).then((res)=>{
+            setrec(res.data);
+          }
+          )
+        }} style={{backgroundColor:"black"}}>
+        Recommend Movies like this
+        </Button>
+        </div>
+        <Recommend
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        obj={rec}
+        />
         </div>
        </div>
         </body>

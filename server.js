@@ -10,13 +10,14 @@ var router=express.Router();
 // var session = require('express-session');
 var cookieParser = require('cookie-parser');
 const { METHODS } = require("http");
+const { error } = require("console");
 app.use(cookieParser());
 
 var User ={uname:"",uid:"",admin:"0"};
 
 const corsOptions = {
     //To allow requests from client
-    origin:["http://localhost:3000","http://172.25.80.1:3000"],
+    origin:["http://localhost:3000","http://172.25.80.1:3000","http://localhost:8000"],
     credentials: true,
     exposedHeaders: ["set-cookie"]
   };
@@ -82,6 +83,7 @@ db.query(req.body[0],function(err,result,fields){
 app.get('/logout',(req,res)=>{
     User.uname="";
     User.uid="";
+    User.admin="0";
  })
 
 app.get('/Actors',(req,res)=>{
@@ -189,16 +191,32 @@ const values =[
 ]
 
 db.query(sql,[values],(err,data)=>{
+
+    
     if(err){
         console.log(err);
         if(err["code"]=='ER_DUP_ENTRY'){
-        res.status(400).send('Movie_info is already present')}
+             return res.status(400).send('Movie_info is already present');}
         else{
-            res.status(400).send(err["sqlMessage"]);
+            return res.status(400).send(err["sqlMessage"]);
+           
         }
     }
-    return res.json(data);
+
+    console.log(data);
 })
+
+const sql2=`INSERT INTO lists(mid,uid,watch,done) SELECT Id,Account_id,0 as watch,0 as done from movie,users where Id=${req.body.id}`;
+        
+db.query(sql2,function(err,data){
+               
+                if (err) {       
+                        res.status(400).send(err["sqlMessage"]);
+                        return;
+                    };
+
+                    console.log(data);
+            })
 
 })
 
@@ -214,7 +232,7 @@ app.get('/Report1',(req,res)=>{
 }
 )
 app.get('/Report2',(req,res)=>{
-    sql="SELECT * FROM user_report";
+    sql=`SELECT movie_info.Genre,count(*) as genre_count,avg(movie_info.Vote_Avg) as avg_vote,SEC_TO_TIME(AVG(TIME_TO_SEC(movie.Runtime))) as AVG_runtime FROM lists,movie,movie_info where lists.mid=movie.Id and movie.Id=movie_info.movie_id and lists.uid=${User.uid} and lists.done=1 group by movie_info.Genre`;
     db.query(sql,function(err,result,fields){
         if (err) throw err;
         

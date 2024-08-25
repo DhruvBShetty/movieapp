@@ -2,15 +2,16 @@ import './App.css';
 import {Moviecomp,Sidebar} from './component';
 import axios from 'axios';
 import React from 'react';
+import { server_addr } from './utils/PrivateRoutes';
 
-let token = await axios.get("http://localhost:8081/getsession").then(res=>res.data);
+let token = await axios.get(`http://${server_addr}/getsession`).then(res=>res.data);
 let obj1=[];
 let obj=[];
 if(token.uname!='' && token.uid!=''){
 const sql=`select * from movie_info,lists,movie where movie_info.movie_id=lists.mid and 
 lists.watch=1 and lists.uid=${token.uid} and movie.id=lists.mid;`
-obj1=await axios.get('http://localhost:8081/Report1').then(res=>res.data);
-obj=await axios.post('http://localhost:8081/generalup',[sql]).then(res=>res.data);}
+obj1=await axios.get(`http://${server_addr}/Report1`).then(res=>res.data);
+obj=await axios.post(`http://${server_addr}/generalup`,[sql]).then(res=>res.data);}
 
 export default function Watchlist(){
   
@@ -22,8 +23,13 @@ export default function Watchlist(){
     <Sidebar/>
     
     <div class="App-header">
+    
+    <div class="customh">
+    <h2>Watchlist</h2>
+    </div>
+    
     <table style={{width:"100%",height:"50%",fontSize:"60%",color:"white",borderSpacing:"15px",backgroundColor:"black",margin:"5px"}}>
-     <caption><h3>Watchlist Report</h3></caption>
+     {/* <caption><h3>Watchlist Report</h3></caption> */}
      <thead>
         <tr>
           <th>Genre</th>

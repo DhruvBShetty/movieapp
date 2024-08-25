@@ -4,8 +4,9 @@ import {Sidebar} from './component';
 import axios from 'axios'
 import './App.css'
 import swal from 'sweetalert';
+import { server_addr } from './utils/PrivateRoutes';
 
-let token = await axios.get("http://localhost:8081/getsession").then(res=>res.data);
+let token = await axios.get(`http://${server_addr}/getsession`).then(res=>res.data);
 
 
  function Addmovie() {
@@ -29,7 +30,7 @@ let token = await axios.get("http://localhost:8081/getsession").then(res=>res.da
     event.preventDefault();
     console.log(values);
     
-    axios.post('http://localhost:8081/Addmovie',values)
+    axios.post(`http://${server_addr}/Addmovie`,values)
     .then(res=>{
         navigate('/')
     })
@@ -41,6 +42,7 @@ let token = await axios.get("http://localhost:8081/getsession").then(res=>res.da
     if (token.admin === 1){
     return (<body class="body">
         <Sidebar/>
+        <div class="formbody">
         <div className="form-style">
             <h2>Add movie</h2>
             <form action="" onSubmit={handleSubmit}>
@@ -80,6 +82,7 @@ let token = await axios.get("http://localhost:8081/getsession").then(res=>res.da
             <footer>
                 <p><Link to="/">Back to Homepage</Link>.</p>
             </footer>
+            </div>
     </div>
     </body>
     )

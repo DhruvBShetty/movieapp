@@ -24,7 +24,7 @@ import './App.css'
     event.preventDefault();
     console.log(values);
     
-    axios.post('http://localhost:8081/generalq',values)
+    axios.post('http://${server_addr}/generalq',values)
     .then(res=>{
         navigate('/');
     })

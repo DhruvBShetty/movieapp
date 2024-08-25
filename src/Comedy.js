@@ -1,10 +1,10 @@
 import './App.css';
 import {Moviecomp,Sidebar} from './component';
 import axios from 'axios';
-
+import { server_addr } from './utils/PrivateRoutes';
 import React from 'react';
 
-let obj=await axios.post('http://localhost:8081/Home',["Comedy"]).then(res=>res.data);
+let obj=await axios.post(`http://${server_addr}/Home`,["Comedy"]).then(res=>res.data);
 
 
 export default function Comedy() {

@@ -23,6 +23,7 @@ import Reviews from './Reviews';
 import {PrivateRoutes} from './utils/PrivateRoutes';
 import Watchlist from './Watchlist';
 import Finishedlist from './Finishedlist';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
@@ -34,13 +35,9 @@ export default function App() {
        <Route path='/' element={<Home/>}> </Route>
        <Route path='/Login' element={<LoginPage/>}></Route>
        <Route element={<PrivateRoutes/>}>
-                <Route path='/Addmovie' element={<Addmovie/>}></Route>
-                {/* <Route path='/Addcreditsdetail' element={<Addcreditsdetail/>}></Route>
-                <Route path='/Addcastcrew' element={<Addcastcrew/>}></Route>
-                <Route path='/Addsubinfo' element={<Addsubinfo/>}></Route> */}
-                <Route path='/Updatemovie' element={<Updatemovie/>}></Route>
+                <Route path='/Addmovie' element={<Addmovie/>}></Route> 
+                 <Route path='/Updatemovie' element={<Updatemovie/>}></Route>
                 <Route path='/Updatemovieinfo' element={<Updatemovieinfo/>}></Route>
-                {/* <Route path='/Updatecredits' element={<Updatecredits/>}></Route>  */}
                 <Route path='/Addmovieinfo' element={<Addmovieinfo/>}></Route>
                 <Route path='/reviews/:id' element={<Reviews/>}></Route>
                 <Route path='/Watchlist/:name' element={<Watchlist/>}></Route>

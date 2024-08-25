@@ -4,8 +4,9 @@ import {Sidebar} from './component';
 import axios from 'axios'
 import './App.css'
 import swal from 'sweetalert';
+import { server_addr } from './utils/PrivateRoutes';
 
-let token = await axios.get("http://localhost:8081/getsession").then(res=>res.data);
+let token = await axios.get(`http://${server_addr}/getsession`).then(res=>res.data);
 
  function Addmovieinfo() {
     const navigate=useNavigate();
@@ -28,7 +29,7 @@ let token = await axios.get("http://localhost:8081/getsession").then(res=>res.da
     event.preventDefault();
     console.log(values);
     
-    axios.post('http://localhost:8081/Addmovieinfo',values)
+    axios.post(`http://${server_addr}/Addmovieinfo`,values)
     .then(res=>{
         navigate('/');
     })
@@ -42,6 +43,7 @@ if (token.admin === 1){
     return (
         <body class="body">
             <Sidebar/>
+        <div class="formbody">
         <div className="form-style">
             <h2>Add Movie info</h2>
             <form action="" onSubmit={handleSubmit} id="usrform">
@@ -61,7 +63,7 @@ if (token.admin === 1){
                 </p>
                 <p>
                     <label>Overview</label><br/>
-                    <textarea name="overview" form="usrform" onChange={handleInput} maxLength="400" rows="10" cols="30" required></textarea>
+                    <textarea name="overview" form="usrform" onChange={handleInput} maxLength="400" rows="5" cols="30" required></textarea>
                 </p>
                 <p>
                     <label>Vote_Avg</label><br/>
@@ -74,13 +76,14 @@ if (token.admin === 1){
                 </p>
                 
                 <p>
-                    <button id="sub_btn" type="submit">submit</button>
+                    <button id="sub_btn" type="submit">Submit</button>
                 </p>
                 <div id="error-message" style={{color: "red",width:"200px"}}></div>
             </form>
             <footer>
                 <p><Link to="/">Back to Homepage</Link>.</p>
             </footer>
+        </div>
         </div>
         </body>
     )

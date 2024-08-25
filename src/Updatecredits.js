@@ -48,7 +48,7 @@ import './App.css'
     
     var sql=`UPDATE credits_detail SET ${arr.join(",")} WHERE cast_and_crew_id=${values.id};`;
     console.log(sql);
-    axios.post('http://localhost:8081/generalup',[sql])
+    axios.post('http://${server_addr}/generalup',[sql])
     .then(res=>{
         navigate('/');
     }) 

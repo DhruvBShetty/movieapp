@@ -2,8 +2,9 @@ import './App.css';
 import {Moviecomp,Sidebar} from './component';
 import axios from 'axios';
 import React from 'react';
+import { server_addr } from './utils/PrivateRoutes';
 
-let obj=await axios.post('http://localhost:8081/Home',["Home"]).then(res=>{return res.data});
+let obj=await axios.post(`http://${server_addr}/Home`,["Home"]).then(res=>{return res.data});
 
 export default function Home() {
   
