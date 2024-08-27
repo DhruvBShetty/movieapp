@@ -4,6 +4,7 @@ import { Sidebar } from './component'
 import axios from 'axios'
 import './App.css'
 import { server_addr } from './utils/PrivateRoutes'
+import swal from 'sweetalert';
 
  function Register() {
     const navigate=useNavigate();
@@ -31,8 +32,10 @@ import { server_addr } from './utils/PrivateRoutes'
         navigate('/Login')
     })
     .catch(err=>{
-        document.getElementById("error-message").textContent=err["response"]["data"]["sqlMessage"];
-        console.log(err["response"]["data"]["sqlMessage"])
+        // console.log(err);
+        // document.getElementById("error-message").textContent=err["response"]["data"];
+        // console.log(err["response"]["data"])
+        swal("Oops!", err["response"]["data"], "info");
     })
 }
 
