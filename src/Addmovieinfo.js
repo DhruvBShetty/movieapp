@@ -6,7 +6,7 @@ import './App.css'
 import swal from 'sweetalert';
 import { server_addr } from './utils/PrivateRoutes';
 
-let token = await axios.get(`http://${server_addr}/getsession`).then(res=>res.data);
+import {token} from './utils/PrivateRoutes';
 
  function Addmovieinfo() {
     const navigate=useNavigate();

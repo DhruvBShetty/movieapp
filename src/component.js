@@ -6,7 +6,8 @@ import swal from 'sweetalert';
 import { server_addr } from './utils/PrivateRoutes';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-let token = await axios.get(`http://${server_addr}/getsession`).then(res=>res.data);
+import {token} from './utils/PrivateRoutes';
+import Cookies from 'js-cookie';
 const picpath="https://www.themoviedb.org/t/p/w300_and_h450_bestv2"
 
 
@@ -136,7 +137,10 @@ function Sidebar(){
         {Sidebaradm.map((val,key)=>{
         return <p onClick={()=>window.location.pathname=val.link}>{val.title}</p>;
     })}
-    <p onClick ={()=>{axios.get(`http://${server_addr}/logout`);
+    <p onClick ={()=>{
+      axios.get(`http://${server_addr}/logout`,{
+        withCredentials: true,
+      });
                     window.location = "/Login";}}>logout</p>
     </div>
     }
@@ -147,7 +151,10 @@ function Sidebar(){
         return <p onClick={()=>window.location.pathname=val.link}>{val.title}</p>
         ;
     })}
-    <p onClick ={()=>{axios.get(`http://${server_addr}/logout`);
+    <p onClick ={()=>{
+      axios.get(`http://${server_addr}/logout`,{
+        withCredentials: true,
+      });
                     window.location = "/Login";}}>logout</p>
     </div>
     }

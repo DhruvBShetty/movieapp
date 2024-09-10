@@ -72,9 +72,9 @@ const handleInput=(event)=>{
   return (
     
     <body class="body">
-      <Sidebar/>
-      
-      <form action="" onSubmit={handleSubmit} class="formfilter" >
+    <div class="App-header">
+    <Sidebar/>
+             <form action="" onSubmit={handleSubmit} class="formfilter" >
                  <p>
                     <label class="flab">Find movie</label><br/>
                     <input type="text" name="movie" onChange={handleInput}/>
@@ -110,9 +110,7 @@ const handleInput=(event)=>{
                     <button id="sub_btn" type="submit">Submit</button>
                 </p>
             </form>
-
-
-    <div class="App-header">
+            
       {obj!="start"?obj.map((i)=><Moviecomp piclink={picpath+i["Picture"]} overview={i["Overview"]} voteavg={i["Vote_Avg"]} id={i["movie_id"]}
       name={i["Title"]}/>):<p></p>}
       <div id="error-message" style={{color: "red",width:"200px"}}></div>

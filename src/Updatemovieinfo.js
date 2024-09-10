@@ -6,7 +6,7 @@ import { Sidebar } from './component';
 import { server_addr } from './utils/PrivateRoutes';
 import swal from 'sweetalert';
 
-let token = await axios.get(`http://${server_addr}/getsession`).then(res=>res.data);
+import {token} from './utils/PrivateRoutes';
 
 
  function Updatemovieinfo() {

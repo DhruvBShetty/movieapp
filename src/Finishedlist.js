@@ -4,13 +4,15 @@ import axios from 'axios';
 import React from 'react';
 import { server_addr } from './utils/PrivateRoutes';
 
-let token = await axios.get(`http://${server_addr}/getsession`).then(res=>res.data);
+import {token} from './utils/PrivateRoutes';
 let obj=[];
 let obj1=[];
 if(token.uname!='' && token.uid!=''){
 const sql=`select * from movie_info,lists,movie where movie_info.movie_id=lists.mid and 
 lists.done=1 and lists.uid=${token.uid} and movie.id=lists.mid;`
-obj1=await axios.get(`http://${server_addr}/Report2`).then(res=>res.data);
+obj1=await axios.get(`http://${server_addr}/Report2`,{
+  withCredentials: true,
+}).then(res=>res.data);
 obj=await axios.post(`http://${server_addr}/generalup`,[sql]).then(res=>res.data);}
 
 export default function Finishedlist(){

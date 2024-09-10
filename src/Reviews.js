@@ -7,7 +7,7 @@ import Select from 'react-select'
 import { server_addr } from './utils/PrivateRoutes'; 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-
+import {token} from './utils/PrivateRoutes';
 
 var mid=window.location.pathname.split('/')[2];
 var sql=`SELECT * FROM movie_info WHERE movie_id="${mid}"`;
@@ -15,7 +15,7 @@ var sqlrev=`SELECT review FROM reviews WHERE movie_id="${mid}"`;
 
 let obj = await axios.post(`http://${server_addr}/Filter`,[sql]).then(res=>res.data).catch(err=>{alert("Movie of this ID not found")});
 let obj2 = await axios.post(`http://${server_addr}/Filter`,[sqlrev]).then(res=>res.data)
-let token = await axios.get(`http://${server_addr}/getsession`).then(res=>res.data);
+
 
 const options = [
   { value: "'1'", label: 'Positive' },
@@ -43,7 +43,7 @@ export default function Reviews(){
       // document.getElementById("revform").submit();
       
       let mrev=token.uname+": "+document.getElementById("mreview").value;
-      let tlink="http://127.0.0.1:8000/?text="+mrev;
+      let tlink="http://localhost:8000/?text="+mrev;
       
       let obj =axios.post(tlink).then(res=>{console.log(res.data.message);
         let safe1=res.data.message;
@@ -80,13 +80,12 @@ export default function Reviews(){
 
     return(
         <body class="body">
-        <Sidebar/>
-
-        
+          
         <div class="App-header">
-        
+        <Sidebar/>
         {obj.map((i)=><Reviewcomp piclink={picpath+i["Picture"]} overview={i["Overview"]} voteavg={i["Vote_Avg"]}/>)}
         <div class="review">
+        
         <h2 style={{textAlign:"center"}}>Reviews</h2>
         <Select 
         defaultValue={selectedOption}
@@ -110,17 +109,19 @@ export default function Reviews(){
         />
          
         {sent.map((i)=><Rcomp review={i["review"]}/>)}
+        
         </div>
        <div id="error-message" style={{color: "red",width:"20px"}}></div>
-       <div class="review">
+       <div class="revcomp">
        <div class="rbox">
         <h2>Submit Review</h2>
         <form id="revform" onSubmit={handlechange}>
-        <textarea rows="5" cols="30" id="mreview" minLength="50" required></textarea>
+        <textarea rows="5" id="mreview" minLength="50" style={{width:"auto"}} required></textarea>
+        <br/>
         <input type="submit" name="rsubmit" value="Submit"/>
         </form>
         </div>
-        <div class="rbox">
+        <div class="recommend">
         <Button variant="primary" onClick={() => {setModalShow(true);
           const recsql=`SELECT * from recommend,movie_info where recommend.rid=movie_info.movie_id and mid=${mid};`
           axios.post(`http://${server_addr}/Filter`,[recsql]).then((res)=>{
@@ -138,6 +139,7 @@ export default function Reviews(){
         />
         </div>
        </div>
+       
         </body>
 
     );

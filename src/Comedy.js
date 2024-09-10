@@ -15,8 +15,9 @@ export default function Comedy() {
   return (
     
     <body class="body">
-      <Sidebar/>
+     
     <div class="App-header">
+    <Sidebar/>
       {obj.map((i)=><Moviecomp piclink={picpath+i["Picture"]} overview={i["Overview"]} voteavg={i["Vote_Avg"]} id={i["movie_id"]}
       name={i["Title"]}/>)}
 

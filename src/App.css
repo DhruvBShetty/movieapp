@@ -7,6 +7,10 @@
   text-align: center;
   vertical-align: middle;
   width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  position:relative;
   /* border: 2px solid black; */
 }
 
@@ -26,8 +30,9 @@
 .formfilter{
   border:4px solid black;
   background-color: azure;
+  font-size: medium;
   margin:10px;
-  padding:60px;
+  padding:30px;
   text-align: center;
   max-height: 450px;
 }
@@ -48,10 +53,41 @@
   height: auto;
   box-sizing: border-box;
   word-wrap: break-word;
+  width: auto;
   max-width: 300px;
   padding:3px;
   margin:15px;
-} 
+}
+
+.rmcomp{
+  position:relative;
+  background-color: black;
+  height: auto;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  width: auto;
+  max-width: 500px;
+  padding:3px;
+  margin:15px;
+  text-align: center;
+  border-radius: 12px;
+}
+
+.revcomp{
+  position:relative;
+  background-color: black;
+  height: auto;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  width: auto;
+  max-width: 500px;
+  padding:9px;
+  margin:15px;
+  text-align: center;
+  border-radius: 12px;
+  height: fit-content;
+}
+
 .imgcontainer {
   position: relative;
   max-width: 310px; 
@@ -82,6 +118,66 @@
   height: 100%;
   margin:0px;
   padding:0px;
+  width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+  .Sidebar {
+    width: 100%;
+    position: relative;
+    text-align: center;
+    min-width: 100px;
+  }
+  .Sidebar p:hover{
+    color:blue;
+  }
+  .Sidebar p{
+    font-size: x-small;
+    padding:0px;
+    margin:0px;
+    border: 1px solid beige;
+  }
+  .Sidebar img{
+    width: 80px;
+    height: 80px;
+  }
+  .mcomp{
+    position:relative;
+  background-color: black;
+  height: auto;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  width: auto;
+  max-width: 165px;
+  padding:3px;
+  margin:15px;
+  }
+
+  .formfilter{
+    border:4px solid black;
+    background-color: azure;
+    font-size: x-small;
+    margin:10px;
+    padding:30px;
+    text-align: center;
+    max-height: 300px;
+    max-width: 250px;
+  }
+
+  .imgcontainer:hover{
+    opacity: 1;
+    position: relative;
+    z-index: 1;
+    width:210px;
+    height: 260px;
+  }
+
+  .imgcontainer {
+    position: relative;
+    max-width: 185px; 
+    max-height:260px;
+    transition: width 3s, height 3s;
+  }
 }
 
 .body{
@@ -113,14 +209,13 @@
 }
 
 .Sidebar{
-  
-  width:210px;
+  position:relative;
   background-color: black;
   color:white;
   font-size: 24px;
   padding: 5px;
-
 }
+
 
 .App-link {
   color: #61dafb;
@@ -178,10 +273,12 @@
   height: auto;
   box-sizing: border-box;
   word-wrap: break-word;
-  width: 460px;
   padding:7.5px;
-  margin:7.5px;
-  
+  margin:15px;
+  text-align: center;
+  min-width: 275px;
+  max-width:450px;
+  border-radius: 12px;
   }
   .rbox{
    background-color: beige;
@@ -189,10 +286,11 @@
    box-sizing: border-box;
    word-wrap:break-word;
    max-width: 750px;
-   padding:8.5px;
+   padding:15px;
    margin:15px;
    border-radius: 6px;
    text-align: center;
+   overflow: hidden;
   }
   .bottom-right {
     position:absolute;

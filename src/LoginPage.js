@@ -21,10 +21,11 @@ const handleInput=(event)=>{
 
 const handleSubmit=(event)=>{
       event.preventDefault();
-      var sql = `SELECT * FROM users WHERE Account_username="${values.name}" AND Password="${values.password}"`;
-      axios.post(`http://${server_addr}/Login`,[sql]).then((res) => {
+      axios.post(`http://${server_addr}/Login`,[values.name,values.password],{
+    withCredentials: true
+}).then((res) => {
         // Update the 'obj' property by creating a new array
-        console.log(res.data);
+        // console.log(res.data)
         if(res.data.length!=0){
             window.location="/"
         }
