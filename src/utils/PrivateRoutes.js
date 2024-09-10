@@ -3,9 +3,10 @@ import React,{useState} from 'react'
 import axios from 'axios';
 
 let server_addr="localhost:8081";
-let token = await axios.get(`http://${server_addr}/getsession`).then(res=>res.data);
+let token = await axios.get(`http://${server_addr}/getsession`,{
+    withCredentials: true
+}).then(res=>res.data);
 
-console.log(token.uname);
 
 function PrivateRoutes(){
     var ans= (token.uname != "") && (token.uid != "");
@@ -14,4 +15,4 @@ function PrivateRoutes(){
        ans ? <Outlet/> : <Navigate to = '/Login'/>)
 };
 
-export {PrivateRoutes,server_addr};
+export {PrivateRoutes,server_addr,token};
